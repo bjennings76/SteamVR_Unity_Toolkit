@@ -106,7 +106,7 @@ namespace VRTK
         protected bool willDeactivate;
         protected bool wasActivated;
         protected VRTK_ControllerReference controllerReference;
-        protected VRTK_InteractableObject pointerInteractableObject = null;
+        public VRTK_InteractableObject pointerInteractableObject = null;
         protected Collider currentCollider;
         protected bool canClickOnHover;
         protected bool activationButtonPressed;

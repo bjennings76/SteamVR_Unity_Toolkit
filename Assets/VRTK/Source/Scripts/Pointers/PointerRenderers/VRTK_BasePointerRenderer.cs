@@ -399,7 +399,12 @@ namespace VRTK
 
         protected Transform GetOrigin(bool smoothed = true)
         {
-            return (smoothed ? pointerOriginTransformFollow.gameObjectToChange.transform : (controllingPointer.customOrigin == null ? GetPointerOriginTransform() : controllingPointer.customOrigin));
+            if (smoothed && pointerOriginTransformFollow.gameObjectToChange)
+            {
+                return pointerOriginTransformFollow.gameObjectToChange.transform;
+            }
+
+            return controllingPointer.customOrigin == null ? GetPointerOriginTransform() : controllingPointer.customOrigin;
         }
 
         protected virtual void PointerEnter(RaycastHit givenHit)
@@ -577,6 +582,8 @@ namespace VRTK
             objectInteractor.layer = LayerMask.NameToLayer("Ignore Raycast");
             VRTK_PlayerObject.SetPlayerObject(objectInteractor, VRTK_PlayerObject.ObjectTypes.Pointer);
 
+            Debug.Log("Creating pointer.", this);
+
             GameObject objectInteractorCollider = new GameObject(VRTK_SharedMethods.GenerateVRTKObjectName(true, gameObject.name, "BasePointerRenderer_ObjectInteractor_Collider"));
             objectInteractorCollider.transform.SetParent(objectInteractor.transform);
             objectInteractorCollider.transform.localPosition = Vector3.zero;
@@ -603,7 +610,6 @@ namespace VRTK
             }
 
             ScaleObjectInteractor(Vector3.one);
-            objectInteractor.SetActive(false);
         }
 
         protected virtual void ScaleObjectInteractor(Vector3 scaleAmount)
@@ -619,7 +625,7 @@ namespace VRTK
             pointerOriginTransformFollowGameObject = new GameObject(VRTK_SharedMethods.GenerateVRTKObjectName(true, gameObject.name, "BasePointerRenderer_Origin_Smoothed"));
             pointerOriginTransformFollow = pointerOriginTransformFollowGameObject.AddComponent<VRTK_TransformFollow>();
             pointerOriginTransformFollow.enabled = false;
-            pointerOriginTransformFollow.moment = VRTK_TransformFollow.FollowMoment.OnFixedUpdate;
+            pointerOriginTransformFollow.moment = VRTK_TransformFollow.FollowMoment.OnLateUpdate;
             pointerOriginTransformFollow.followsScale = false;
         }
 
