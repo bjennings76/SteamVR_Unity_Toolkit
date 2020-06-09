@@ -224,7 +224,7 @@ namespace VRTK
         #region MonoBehaviour methods
         protected virtual void OnEnable()
         {
-            animator = GetComponent<Animator>();
+            animator = GetComponentInChildren<Animator>();
             controllerEvents = (controllerEvents != null ? controllerEvents : GetComponentInParent<VRTK_ControllerEvents>());
             interactNearTouch = (interactNearTouch != null ? interactNearTouch : GetComponentInParent<VRTK_InteractNearTouch>());
             interactTouch = (interactTouch != null ? interactTouch : GetComponentInParent<VRTK_InteractTouch>());
