@@ -1,4 +1,5 @@
 ﻿// SDK Scripting Define Symbol Predicate|SDK_Base|003
+
 namespace VRTK
 {
 #if UNITY_EDITOR
@@ -93,6 +94,8 @@ namespace VRTK
 
         private void SetBuildTarget(string groupName)
         {
+            if (string.IsNullOrEmpty(groupName)) { return; }
+
             buildTargetGroupName = groupName;
 
 #if UNITY_EDITOR
@@ -101,9 +104,9 @@ namespace VRTK
             {
                 buildTargetGroup = (BuildTargetGroup)Enum.Parse(buildTargetGroupType, groupName);
             }
-            catch (Exception exception)
-            {
-                VRTK_Logger.Fatal(new ArgumentOutOfRangeException(string.Format("'{0}' isn't a valid constant name of '{1}'.", groupName, buildTargetGroupType.Name), exception));
+            catch (Exception) {
+                Debug.LogError(string.Format("'{0}' isn't a valid constant name of '{1}'.", groupName, buildTargetGroupType.Name));
+                // VRTK_Logger.Fatal(new ArgumentOutOfRangeException(string.Format("'{0}' isn't a valid constant name of '{1}'.", groupName, buildTargetGroupType.Name), exception)));
                 return;
             }
 
