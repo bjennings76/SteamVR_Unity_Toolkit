@@ -1532,13 +1532,13 @@ namespace VRTK
             //Trigger Pressed
             if (VRTK_SDK_Bridge.GetControllerButtonState(SDK_BaseController.ButtonTypes.Trigger, SDK_BaseController.ButtonPressTypes.PressDown, controllerReference))
             {
-                OnTriggerPressed(SetControllerEvent(ref triggerPressed, true, currentTriggerAxis.x));
+                OnTriggerPressed(SetControllerEvent(ref triggerPressed, true, currentTriggerAxis.x > 0 ? currentTriggerAxis.x : 1));
             }
 
             //Trigger Clicked
             if (!triggerClicked && currentTriggerAxis.x >= triggerClickThreshold)
             {
-                OnTriggerClicked(SetControllerEvent(ref triggerClicked, true, currentTriggerAxis.x));
+                OnTriggerClicked(SetControllerEvent(ref triggerClicked, true, currentTriggerAxis.x > 0 ? currentTriggerAxis.x : 1));
             }
             else if (triggerClicked && currentTriggerAxis.x < triggerClickThreshold)
             {
@@ -1608,13 +1608,13 @@ namespace VRTK
             //Grip Pressed
             if (VRTK_SDK_Bridge.GetControllerButtonState(SDK_BaseController.ButtonTypes.Grip, SDK_BaseController.ButtonPressTypes.PressDown, controllerReference))
             {
-                OnGripPressed(SetControllerEvent(ref gripPressed, true, currentGripAxis.x));
+                OnGripPressed(SetControllerEvent(ref gripPressed, true, currentGripAxis.x > 0 ? currentGripAxis.x : 1));
             }
 
             //Grip Clicked
             if (!gripClicked && currentGripAxis.x >= gripClickThreshold)
             {
-                OnGripClicked(SetControllerEvent(ref gripClicked, true, currentGripAxis.x));
+                OnGripClicked(SetControllerEvent(ref gripClicked, true, currentGripAxis.x > 0 ? currentGripAxis.x : 1));
             }
             else if (gripClicked && currentGripAxis.x < gripClickThreshold)
             {
