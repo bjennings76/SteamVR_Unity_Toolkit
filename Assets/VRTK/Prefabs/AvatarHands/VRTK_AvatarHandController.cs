@@ -232,7 +232,11 @@ namespace VRTK
             interactUse = (interactUse != null ? interactUse : GetComponentInParent<VRTK_InteractUse>());
 
             controllerReference = VRTK_ControllerReference.GetControllerReference(controllerEvents.gameObject);
+
+            VRTK_SDKManager.instance.LoadedSetupChanged += OnSetupChanged;
         }
+
+        private void OnSetupChanged(VRTK_SDKManager sender, VRTK_SDKManager.LoadedSetupChangeEventArgs e) { DetectController(); }
 
         protected virtual void OnDisable()
         {
@@ -342,6 +346,8 @@ namespace VRTK
 
         protected virtual void UnsubscribeEvents()
         {
+            VRTK_SDKManager.instance.LoadedSetupChanged -= OnSetupChanged;
+            
             if (controllerEvents != null)
             {
                 UnsubscribeButtonEvent(savedThumbButtonState, DoThumbEvent);
