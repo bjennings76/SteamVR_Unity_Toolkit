@@ -31,7 +31,6 @@ namespace VRTK
 
         protected BoxCollider canvasBoxCollider;
         protected Rigidbody canvasRigidBody;
-        protected Coroutine draggablePanelCreation;
         protected const string CANVAS_DRAGGABLE_PANEL = "VRTK_UICANVAS_DRAGGABLE_PANEL";
         protected const string ACTIVATOR_FRONT_TRIGGER_GAMEOBJECT = "VRTK_UICANVAS_ACTIVATOR_FRONT_TRIGGER";
 
@@ -121,7 +120,6 @@ namespace VRTK
                 canvasRigidBody.isKinematic = true;
             }
 
-            draggablePanelCreation = StartCoroutine(CreateDraggablePanel(canvas, canvasSize));
             CreateActivator(canvas, canvasSize);
         }
 
@@ -204,11 +202,6 @@ namespace VRTK
             if (canvasRigidBody != null)
             {
                 Destroy(canvasRigidBody);
-            }
-
-            if (draggablePanelCreation != null)
-            {
-                StopCoroutine(draggablePanelCreation);
             }
 
             Transform draggablePanel = canvas.transform.Find(CANVAS_DRAGGABLE_PANEL);
