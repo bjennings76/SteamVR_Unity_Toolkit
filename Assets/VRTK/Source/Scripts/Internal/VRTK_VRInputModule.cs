@@ -1,4 +1,6 @@
-﻿namespace VRTK
+﻿using System.Linq;
+
+namespace VRTK
 {
     using UnityEngine;
     using UnityEngine.EventSystems;
@@ -53,6 +55,12 @@
             List<RaycastResult> raycasts = new List<RaycastResult>();
             eventSystem.RaycastAll(pointer.pointerEventData, raycasts);
             return raycasts;
+        }
+
+        private void OnDrawGizmos() {
+            foreach (VRTK_UIPointer pointer in pointers.Where(p => p && p.enabled && p.gameObject.activeInHierarchy)) {
+                Gizmos.DrawRay(pointer.GetOriginPosition(), pointer.GetOriginForward());
+            }
         }
 
         protected virtual bool CheckTransformTree(Transform target, Transform source)
