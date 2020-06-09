@@ -34,7 +34,7 @@
 
         protected virtual void Awake()
         {
-            fadeMaterial = new Material(Shader.Find("Unlit/TransparentColor"));
+            fadeMaterial = new Material(Shader.Find("UI/Unlit/Transparent"));
             instance = this;
         }
 
