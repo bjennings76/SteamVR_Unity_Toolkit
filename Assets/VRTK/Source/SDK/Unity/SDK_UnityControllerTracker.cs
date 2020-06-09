@@ -1,4 +1,8 @@
 ﻿// Unity SDK Controller Tracker|SDK_Unity|005
+
+using System.Collections.Generic;
+using System.Linq;
+
 namespace VRTK
 {
     using UnityEngine;
@@ -57,8 +61,18 @@ namespace VRTK
 
         protected virtual void FixedUpdate()
         {
-            transform.localPosition = InputTracking.GetLocalPosition(nodeType);
-            transform.localRotation = InputTracking.GetLocalRotation(nodeType);
+            List<XRNodeState> states = new List<XRNodeState>();
+            InputTracking.GetNodeStates(states);
+
+            XRNodeState state = states.FirstOrDefault(s => s.nodeType == nodeType);
+
+            if (state.TryGetPosition(out Vector3 pos)) {
+                transform.position = pos;
+            }
+
+            if (state.TryGetRotation(out Quaternion rot)) {
+                transform.rotation = rot;
+            }
         }
     }
 }
