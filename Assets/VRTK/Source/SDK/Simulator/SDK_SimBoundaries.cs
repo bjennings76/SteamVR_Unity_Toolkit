@@ -26,7 +26,7 @@ namespace VRTK
         {
             if (area == null)
             {
-                GameObject simPlayer = SDK_InputSimulator.FindInScene();
+                SDK_InputSimulator simPlayer = SDK_InputSimulator.FindInScene();
                 if (simPlayer)
                 {
                     area = simPlayer.transform;

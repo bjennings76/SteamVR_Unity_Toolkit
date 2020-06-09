@@ -24,9 +24,6 @@ namespace VRTK
             {"HairTouchModifier", KeyCode.H}
         };
 
-        protected const string RIGHT_HAND_CONTROLLER_NAME = "RightHand";
-        protected const string LEFT_HAND_CONTROLLER_NAME = "LeftHand";
-
         public virtual void SetKeyMappings(Dictionary<string, KeyCode> givenKeyMappings)
         {
             keyMappings = givenKeyMappings;
@@ -268,16 +265,16 @@ namespace VRTK
         public override GameObject GetControllerModel(ControllerHand hand)
         {
             GameObject model = null;
-            GameObject simPlayer = SDK_InputSimulator.FindInScene();
+            SDK_InputSimulator simPlayer = SDK_InputSimulator.FindInScene();
             if (simPlayer != null)
             {
                 switch (hand)
                 {
                     case ControllerHand.Left:
-                        model = simPlayer.transform.Find(string.Format("{0}/Hand", LEFT_HAND_CONTROLLER_NAME)).gameObject;
+                        model = simPlayer.LeftHand.Find("Hand").gameObject;
                         break;
                     case ControllerHand.Right:
-                        model = simPlayer.transform.Find(string.Format("{0}/Hand", RIGHT_HAND_CONTROLLER_NAME)).gameObject;
+                        model = simPlayer.RightHand.Find("Hand").gameObject;
                         break;
                 }
             }
@@ -456,11 +453,11 @@ namespace VRTK
         {
             if (rightController == null || leftController == null)
             {
-                GameObject simPlayer = SDK_InputSimulator.FindInScene();
+                SDK_InputSimulator simPlayer = SDK_InputSimulator.FindInScene();
                 if (simPlayer != null)
                 {
-                    rightController = (rightController == null ? simPlayer.transform.Find(RIGHT_HAND_CONTROLLER_NAME).GetComponent<SDK_ControllerSim>() : rightController);
-                    leftController = (leftController == null ? simPlayer.transform.Find(LEFT_HAND_CONTROLLER_NAME).GetComponent<SDK_ControllerSim>() : leftController);
+                    rightController = rightController == null ? simPlayer.RightHand.GetComponent<SDK_ControllerSim>() : rightController;
+                    leftController = leftController == null ? simPlayer.LeftHand.GetComponent<SDK_ControllerSim>() : leftController;
                 }
             }
         }
@@ -600,7 +597,7 @@ namespace VRTK
         /// <returns>the gameobject of the actual controller corresponding to the specified hand</returns>
         protected virtual GameObject GetActualController(ControllerHand hand)
         {
-            GameObject simPlayer = SDK_InputSimulator.FindInScene();
+            SDK_InputSimulator simPlayer = SDK_InputSimulator.FindInScene();
             GameObject controller = null;
 
             if (simPlayer != null)
@@ -608,12 +605,10 @@ namespace VRTK
                 switch (hand)
                 {
                     case ControllerHand.Right:
-                        controller = simPlayer.transform.Find(RIGHT_HAND_CONTROLLER_NAME).gameObject;
+                        controller = simPlayer.RightHand.gameObject;
                         break;
                     case ControllerHand.Left:
-                        controller = simPlayer.transform.Find(LEFT_HAND_CONTROLLER_NAME).gameObject;
-                        break;
-                    default:
+                        controller = simPlayer.LeftHand.gameObject;
                         break;
                 }
             }

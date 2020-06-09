@@ -12,8 +12,6 @@ namespace VRTK
     {
         private Transform camera;
         protected VRTK_VelocityEstimator cachedHeadsetVelocityEstimator;
-        private float magnitude;
-        private Vector3 axis;
 
         /// <summary>
         /// The ProcessUpdate method enables an SDK to run logic for every Unity Update
@@ -39,10 +37,10 @@ namespace VRTK
         {
             if (camera == null)
             {
-                GameObject simPlayer = SDK_InputSimulator.FindInScene();
+                SDK_InputSimulator simPlayer = SDK_InputSimulator.FindInScene();
                 if (simPlayer)
                 {
-                    camera = simPlayer.transform.Find("Neck/Camera");
+                    camera = simPlayer.Neck.Find("Camera");
                 }
             }
 
